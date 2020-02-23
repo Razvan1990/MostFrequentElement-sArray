@@ -1,0 +1,94 @@
+import java.util.*;
+
+public class MostFrequentElementArray {
+
+    private int arraySize() {
+
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Please introduce the array size");
+        int x = scanner.nextInt();
+        return x;
+    }
+
+    private int[] arrayInCause(int dim) {
+        int[] myArray = new int[dim];
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Please introduce the array elements");
+        for (int i = 0; i < myArray.length; i++) {
+            System.out.print("Elementul " + i + "este ");
+            myArray[i] = scanner.nextInt();
+        }
+        return myArray;
+    }
+
+    private void showArray(int[] array) {
+        for (int i = 0; i < array.length; i++) {
+            System.out.print(array[i] + " ");
+        }
+    }
+
+    private HashMap<Integer, Integer> mostFrequentElement(int[] array) {
+        HashMap<Integer, Integer> myMap = new HashMap<>();
+        for (int i = 0; i < array.length; i++) {
+            Integer value = myMap.get(array[i]);
+            if (myMap.containsKey(array[i])) {
+                myMap.put(array[i], ++value);
+
+            } else {
+                myMap.put(array[i], 1);
+            }
+        }
+        return myMap;
+    }
+
+    private List<Integer> valueList(HashMap<Integer, Integer> myMap) {
+        List<Integer> frequencyElements = new ArrayList<>();
+        for (int i : myMap.keySet()) {
+            frequencyElements.add(myMap.get(i));
+        }
+        return frequencyElements;
+    }
+
+    private int maxValues(List<Integer> frequencyElements) {
+
+        int max = frequencyElements.get(0);
+        for (int i = 0; i < frequencyElements.size(); i++) {
+            if (max < frequencyElements.get(i)) {
+                max = frequencyElements.get(i);
+            }
+        }
+        return max;
+    }
+
+    private List<Integer> getDesiredValue(HashMap<Integer, Integer> myMap, int value) {
+        List<Integer> maximumList = new ArrayList<>();
+        System.out.println("Most frequent element is");
+        for (int k : myMap.keySet()) {
+            if (value == myMap.get(k)) {
+                maximumList.add(k);
+            }
+        }
+        return maximumList;
+    }
+
+    public static void main(String[] args) {
+        HashMap<Integer, Integer> map = new HashMap<>();
+        List<Integer> myList = new ArrayList<>();
+        List<Integer> myMaxList = new ArrayList<>();
+        MostFrequentElementArray mostFrequentElementArray = new MostFrequentElementArray();
+        int[] givenArray = mostFrequentElementArray.arrayInCause(mostFrequentElementArray.arraySize());
+        mostFrequentElementArray.showArray(givenArray);
+        map = mostFrequentElementArray.mostFrequentElement(givenArray);
+        myList = mostFrequentElementArray.valueList(map);
+
+        int max = mostFrequentElementArray.maxValues(myList);
+        //  int frequentElement = mostFrequentElementArray.getDesiredValue(map,max);
+        myMaxList = mostFrequentElementArray.getDesiredValue(map, max);
+        for (int i : myMaxList) {
+            System.out.print(i + " ");
+        }
+
+
+    }
+
+}
